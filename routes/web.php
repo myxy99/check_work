@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    clean("<scpt>alert('1')</scpt>");
     return view('welcome');
 });
 
