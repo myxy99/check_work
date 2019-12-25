@@ -10,16 +10,18 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         if (auth()->attempt(self::credentials($request), false)) {
-            if (auth()->user()->is_admin) {
-                return response()->success(200, '登陆成功！', env('SKIP_ADMIN'));
-            } else {
-                return response()->success(200, '登陆成功！', env('SKIP_INDEX'));
-            }
+            return auth()->user()->is_admin ?
+                response()->success(200, '登陆成功！', env('SKIP_ADMIN')) :
+                response()->success(200, '登陆成功！', env('SKIP_INDEX'));
         } else {
             return response()->fail(100, '账号或者密码错误！');
         }
     }
 
+    /**
+     * @param $request
+     * @return array
+     */
     protected function credentials($request)
     {
         return ['user_name' => $request->user_name, 'password' => $request->password];
