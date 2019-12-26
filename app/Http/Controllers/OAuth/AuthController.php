@@ -18,8 +18,8 @@ class AuthController extends Controller
         try {
             $token = auth()->attempt(self::credentials($request));
             return auth()->user()->is_admin ?
-                self::respondWithToken($token, '登陆成功！', 201, env('SKIP_ADMIN')) :
-                self::respondWithToken($token, '登陆成功！', 200, env('SKIP_INDEX'));
+                self::respondWithToken($token, '登陆成功！', 201) :
+                self::respondWithToken($token, '登陆成功！', 200);
         } catch (\Exception $e) {
             \App\Utils\Logs::logError('登陆失败！', [$e->getMessage()]);
             return response()->fail(100, '登陆失败！');
@@ -62,11 +62,10 @@ class AuthController extends Controller
             response()->fail(100, '刷新token失败!');
     }
 
-    protected function respondWithToken($token, $msg, $code = 200, $data = null)
+    protected function respondWithToken($token, $msg, $code = 200)
     {
         return response()->success($code, $msg, array(
             'token' => $token,
-            'url' => $data,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ));
