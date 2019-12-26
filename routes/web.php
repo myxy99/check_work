@@ -21,3 +21,18 @@ Route::get('/', function () {
 Route::post('OAuth/login', 'OAuth\AuthController@login');
 Route::view('/index', 'index');
 Route::view('/admin', 'admin');
+
+Route::get('front/getallinfo','Front\FrontInfoController@getAllInfo');
+Route::get('front/getpersoninfo','Front\PersonInfoController@getPersonInfo');
+Route::post('front/puchcard','Front\PunchCardController@puchCard');
+
+
+Route::get('admin/getallmsg','Admin\MessageController@getAllMsg');
+Route::delete('admin/delmsg','Admin\MessageController@delMsg');
+Route::delete('admin/cancelfile','Admin\MessageController@cancelFile');
+Route::get('admin/msgrecord','Admin\MessageController@msgRecord');
+Route::get('admin/searchmsg','Admin\MessageController@searchMsg');
+Route::post('admin/uploadfile','Admin\MessageController@uploadFile');
+Route::delete('admin/delmsg','Admin\MessageController@delMsg');
+
+
