@@ -18,4 +18,16 @@ class users extends \Illuminate\Foundation\Auth\User implements \Illuminate\Cont
     {
         return $this->passwd;
     }
+
+    //通知界面显示发送对象
+    public static function showSendObj(){
+        try{
+            $res = self::select('id','department_name')
+                ->paginate(5)
+                ->toarray();
+            return $res;
+        }catch (\Exception $e){
+            \App\Utils\Logs::logError('查询失败!', [$e->getMessage()]);
+        }
+    }
 }
