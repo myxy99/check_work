@@ -31,17 +31,61 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
         return $this->passwd;
     }
 
-    //通知界面显示发送对象
-    public static function showSendObj(){
-        try{
-            $res = self::select('id','department_name')
-                ->paginate(5)
-                ->toarray();
-            return $res;
-        }catch (\Exception $e){
-            \App\Utils\Logs::logError('查询失败!', [$e->getMessage()]);
+
+    /**
+     * @param $id
+     * @return |null
+     * @throws \Exception
+     */
+    public static function getUserName($id)
+    {
+        try {
+            return self::where('id', $id)
+                ->select('id', 'user_name')
+                ->first();
+        } catch (\Exception $e) {
+            \App\Utils\Logs::logError('用户名获取失败!', [$e->getMessage()]);
+            return null;
         }
     }
+
+    /**
+     * @param $id
+     * @param $pwd
+     * @return bool
+     * @throws \Exception
+     */
+    public static function updatePassword($id, $pwd)
+    {
+        try {
+            $res = self::find($id);
+            $res->passwd = bcrypt($pwd);
+            $res->save();
+            return $res ? true : false;
+        } catch (\Exception $e) {
+            \App\Utils\Logs::logError('密码修改失败!', [$e->getMessage()]);
+            return false;
+        }
+    }
+
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public static function showSendObj()
+    {
+        try {
+            $res = self::select('id', 'department_name')
+                ->paginate(env('PAGE_NUM'))
+                ->toarray();
+            return $res;
+        } catch (\Exception $e) {
+            \App\Utils\Logs::logError('查询失败!', [$e->getMessage()]);
+            return 0;
+        }
+    }
+
     /**
      * 修改密码
      * @param $updatePW
@@ -59,4 +103,5 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
             return false;
         }
     }
+
 }
