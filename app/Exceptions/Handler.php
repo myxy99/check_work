@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
         if (Request::ajax()) {
             return response()->fail($StatusCode, $errormsg, env('APP_DEBUG') ? $errors : null, $StatusCode);
         }else{
-            return response()->view('errors.' . $StatusCode, ['errors' => $errors]);
+            return response()->view('errors.' . $StatusCode, ['errors' => $errors],$StatusCode);
         }
     }
 }
