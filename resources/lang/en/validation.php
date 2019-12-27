@@ -112,5 +112,8 @@ return [
     'attributes' => [
         'user_name' => '用户名',
         'password' => '密码',
+        'title'=>'标题',
+        'content'=>'通知内容',
     ],
+
 ];
