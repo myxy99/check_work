@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +12,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::post('OAuth/login', 'OAuth\AuthController@login');//登陆
 Route::post('OAuth/logout', 'OAuth\AuthController@logout');//退出登陆
 Route::post('OAuth/refresh', 'OAuth\AuthController@refresh');//刷新token
 Route::post('OAuth/updatepw', 'OAuth\AuthController@updatepw');//修改密码
+
