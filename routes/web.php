@@ -28,4 +28,5 @@ Route::prefix('Admin')->namespace('Admin')->group(function(){
     Route::post('searchNotice', 'NoticeController@searchNotice');//搜索框搜索
     Route::get('showSendObj', 'NoticeController@showSendObj');//通知界面显示发送对象
     Route::post('addNotice', 'NoticeController@addNotice');//新增通知
+
 });

@@ -17,7 +17,7 @@ class CreatePunchTimeSettingsTable extends Migration
             $table->bigIncrements('id')->comment('主键id');
             $table->time('clock_time')->comment('时间');
             $table->timestamps();
-            $table->timestamp('unable_at')->comment('失效时间');
+            $table->timestamp('unable_at')->nullable()->comment('失效时间');
         });
     }
 
