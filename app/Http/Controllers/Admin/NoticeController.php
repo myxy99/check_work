@@ -7,8 +7,6 @@ use App\Http\Requests\Admin\AddNoticeRequest;
 use App\Models\notices;
 use App\Models\users;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 
 class NoticeController extends Controller
 {
