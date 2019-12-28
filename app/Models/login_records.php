@@ -10,4 +10,12 @@ class login_records extends Model
     protected $table = 'login_records';
     protected $primaryKey = 'id';
     protected $guarded = [];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user()
+    {
+        return $this->hasMany(users::class, 'id', 'user_id');
+    }
 }

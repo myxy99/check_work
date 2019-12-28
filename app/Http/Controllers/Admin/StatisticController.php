@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\TestExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Statistic\ExportRequest;
-use App\Http\Requests\Admin\Statistic\SearchRequest;
+use App\Http\Requests\Admin\ExportRequest;
+use App\Http\Requests\Admin\SearchRequest;
 use App\Models\punch_time_records;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class StatisticController extends Controller
 {
-    //
-
     public function getSearch(SearchRequest $request){
         $statistics=punch_time_records::getSearch($request['department']);
         return $statistics != null ?

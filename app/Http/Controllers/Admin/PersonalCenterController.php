@@ -3,20 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\users;
-use DB;
 
 class PersonalCenterController extends Controller
 {
 
     /**
-     * 用户信息回显
-     * @author Varsion
-     * JianhuaL
-     * @param  Request $request 获取所需要的信息
-     * @return JSON             回显信息
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
      */
     public function getUserName(Request $request)
     {
@@ -28,11 +24,9 @@ class PersonalCenterController extends Controller
     }
 
     /**
-     * 修改密码
-     * @author Varsion
-     * JianhuaL
-     * @param  Request $request 获取需要的参数
-     * @return JSON
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
      */
     public function updatePassword(Request $request)
     {

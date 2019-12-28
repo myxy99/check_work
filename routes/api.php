@@ -35,3 +35,9 @@ Route::prefix('Admin')->namespace('Admin')->group(function () {
     Route::post('addNotice', 'NoticeController@addNotice');//新增通知
 });
 
+Route::prefix('statistic')->namespace('Admin')->group(function (){
+    Route::get('alldata','StatisticController@getalldata');//获取所有的
+    Route::post('search','StatisticController@getSearch');//搜索框查询
+    Route::post('export','StatisticController@getexport');//导出
+});
+
