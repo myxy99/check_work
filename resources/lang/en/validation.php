@@ -84,6 +84,7 @@ return [
     'check_code' => '请检查权限码',
     'check_state' => '请检查状态码',
     'check_access_code' => '请检查权限码',
+
     /*
 |--------------------------------------------------------------------------
 | Custom Validation Language Lines
@@ -112,5 +113,11 @@ return [
     'attributes' => [
         'user_name' => '用户名',
         'password' => '密码',
+        'attachments' =>'附件',
+        'H:i:s' => '时:分:秒',
+        'phone_number'=>'电话号码',
+        'name' =>'姓名',
+        'fromuser_id' => '发送人id',
+        'keywords' => '关键词',
     ],
 ];
