@@ -26,7 +26,7 @@ class PuchCardRequest extends FormRequest
     public function rules()
     {
         return [
-            "time" => 'date_format:"H:i:s"|required',
+            "puchtime" => 'date_format:"H:i:s"|required',
         ];
     }
     protected function failedValidation(Validator $validator)

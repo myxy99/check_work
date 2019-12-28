@@ -4,6 +4,8 @@ namespace App\Http\Controllers\OAuth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OAuth\Auth\LoginRequest;
+use App\Http\Requests\OAuth\Auth\UpdatepwRequest;
+use App\Models\users;
 
 class AuthController extends Controller
 {
@@ -42,6 +44,16 @@ class AuthController extends Controller
             \App\Utils\Logs::logError('退出登陆失败！', [$e->getMessage()]);
             return response()->fail(100, '退出登陆失败！');
         }
+    }
+
+    /**
+     * @param UpdatepwRequest $request
+     * @throws \Exception
+     */
+    public function updatepw(UpdatepwRequest $request){
+        return users::updatePW($request->new_password) ?
+            response()->success(200, '修改密码成功！') :
+            response()->fail(200, '修改密码失败！');
     }
 
     /**

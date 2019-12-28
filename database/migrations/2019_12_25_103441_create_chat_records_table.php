@@ -21,7 +21,7 @@ class CreateChatRecordsTable extends Migration
             $table->bigInteger('to_user_id')->unsigned()->comment('接收用户id');
             $table->foreign('to_user_id')->references('id')->on('users');
             $table->string('to_user_name', 20)->comment('接收人姓名');
-            $table->text('content')->comment('发送内容');
+            $table->text('content')->nullable()->comment('发送内容');
             $table->bigInteger('attachment_id')->unsigned()->comment('附件id');
             $table->timestamps();
         });

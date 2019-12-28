@@ -28,12 +28,12 @@ class MessageController extends Controller
             $result = chat_records::getAllChatMsg($user_id);
             if($result){
                 if($result->isEmpty()){
-                    return success(200,'目前没有任何消息！',null);
+                    return response()->success(200,'目前没有任何消息！',null);
                 }else{
-                    return success(200,'获取成功！',$result);
+                    return  response()->success(200,'获取成功！',$result);
                 }
             }else{
-                return fail(100,'获取所有消息失败！',null);
+                return response()->fail(100,'获取所有消息失败！',null);
             }
         }catch (\Exception $e){
             Logs::logError('获取所有消息失败！',[$e->getMessage()]);
@@ -90,6 +90,7 @@ class MessageController extends Controller
     //获取记录信息
     public function msgRecord(DelMsgRequest $request){
         try {
+            $adminstatus = Auth::user()->is_admin;
             $fromuser_id = $request->fromuser_id;
             $touser_id = Auth::id();
             if ($adminstatus != 1){

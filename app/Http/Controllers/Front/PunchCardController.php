@@ -14,7 +14,7 @@ class PunchCardController extends Controller
     //打卡
     public function puchCard(PuchCardRequest $request){
         try {
-            $time = $request->time;
+            $time = $request->puchtime;
             $user_id = Auth::id();
             $result = punch_time_records::punchTimeRecord($user_id, $time);
             if ($result) {

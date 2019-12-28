@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends FormRequest
+class UpdatepwRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,13 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required',
-            'password' => 'required|between:6,16|string',
+            'new_password' => 'required|between:6,16|string',
         ];
     }
+
+    /**
+     * @param Validator $validator
+     */
     protected function failedValidation(Validator $validator)
     {
         throw (new HttpResponseException(response()->fail(422, '参数错误！', $validator->errors()->all(), 422)));

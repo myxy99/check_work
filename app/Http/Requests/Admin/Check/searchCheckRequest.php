@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\OAuth\Auth;
+namespace App\Http\Requests\Admin\Check;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class searchCheckRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,12 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required',
-            'password' => 'required|between:6,16|string',
+            'unit_name' => 'required|string|max:255'
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
-        throw (new HttpResponseException(response()->fail(422, '参数错误！', $validator->errors()->all(), 422)));
+        throw (new HttpResponseException(response()->fail(422, '参数错误!', $validator->errors()->all(), 422)));
     }
 }
