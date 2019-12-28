@@ -112,8 +112,19 @@ return [
     'attributes' => [
         'user_name' => '用户名',
         'password' => '密码',
-        'title'=>'标题',
-        'content'=>'通知内容',
+        'title' => '标题',
+        'content' => '通知内容',
+        'title' => '标题',
+        'department_name' => '单位名',
+        'unit_name' => '单位名',
+        'user_name' => '用户名',
+        'passwd' => '密码',
+        'begin_time' => '值班开始时间',
+        'end_time' => '值班结束时间',
+        'status' => '打卡设置的状态',
+        'count' => '间隔打卡次数',
+        'count_array' => '定时打卡数组',
+
     ],
 
 ];

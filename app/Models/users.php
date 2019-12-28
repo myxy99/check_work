@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\Authenticatable;
+use App\Utils\Logs;
 
 class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Authenticatable
 {
@@ -30,7 +31,6 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
     {
         return $this->passwd;
     }
-
 
     /**
      * @param $id
@@ -64,6 +64,18 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
             return $res ? true : false;
         } catch (\Exception $e) {
             \App\Utils\Logs::logError('密码修改失败!', [$e->getMessage()]);
+            return false;
+        }
+    }
+
+
+    public static function createUnit($array = [])
+    {
+        try {
+            $id = self::create($array);
+            return $id ? true : false;
+        } catch (\Excption $e) {
+            Logs::logError('添加单位失败!', [$e->getMessage()]);
             return false;
         }
     }
@@ -104,4 +116,17 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
         }
     }
 
+    public static function updateUnit($array = [], $id)
+    {
+        try {
+            $users = self::find($id);
+            $users->department_name = $array['department_name'];
+            if (isset($array['passwd'])) $users->passwd = $array['passwd'];
+            $result = $users->save();
+            return $result ? true : false;
+        } catch (\Excption $e) {
+            Logs::logError('更新单位失败!', [$e->getMessage()]);
+            return false;
+        }
+    }
 }
