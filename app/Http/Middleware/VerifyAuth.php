@@ -9,16 +9,16 @@ class VerifyAuth
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check()) {
-            return $next($request);
-        } else {
-            return response()->fail(100, '请先登陆!', null, 401);
-        }
+        return auth()->check() ?
+            $next($request) :
+            ($request->ajax() ?
+                response()->fail(100, '请先登陆!', null, 401) :
+                response()->view('errors.' . 403, null, 403));
     }
 }

@@ -19,9 +19,10 @@ class AuthController extends Controller
     {
         try {
             $token = auth()->attempt(self::credentials($request));
-            return auth()->user()->is_admin ?
+            return $token ? (auth()->user()->is_admin ?
                 self::respondWithToken($token, '登陆成功！', 201) :
-                self::respondWithToken($token, '登陆成功！', 200);
+                self::respondWithToken($token, '登陆成功！', 200)) :
+                response()->fail(100, '账号或者密码错误！');
         } catch (\Exception $e) {
             \App\Utils\Logs::logError('登陆失败！', [$e->getMessage()]);
             return response()->fail(100, '登陆失败！');
