@@ -18,8 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('OAuth/login', 'OAuth\AuthController@login');
-Route::view('/index', 'index');
-Route::view('/admin', 'admin');
-
 
