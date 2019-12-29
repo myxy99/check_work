@@ -62,6 +62,11 @@ class DatabaseSeeder extends Seeder
             \App\Models\punch_time_settings::create([
                 'clock_time' => $faker->date("H:i:s", 'now'),
             ]);
+            \App\Models\punch_time_records::create([
+                'name' => $faker->firstNameMale,
+                'user_id' => rand(1, env('DB_SEED_NUM')),
+                'required_time' => $faker->date("Y-m-d H:i:s", 'now'),
+            ]);
         }
     }
 }

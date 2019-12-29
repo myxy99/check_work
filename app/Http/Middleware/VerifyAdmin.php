@@ -19,6 +19,6 @@ class VerifyAdmin
             ? $next($request) :
             ($request->ajax() ?
                 response()->fail(403, '权限不足!', null, 403) :
-                response()->view('errors.' . 403, null, 403));
+                response()->view('errors.' . 403, ['errors'=>''], 403));
     }
 }

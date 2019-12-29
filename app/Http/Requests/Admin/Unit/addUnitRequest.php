@@ -26,8 +26,8 @@ class addUnitRequest extends FormRequest
     public function rules()
     {
         return [
-            'department_name' => 'required|max:255|string',
-            'user_name' => 'required|max:20|string',
+            'department_name' => 'required|max:255|unique:users,department_name',
+            'user_name' => 'required|max:20|string|unique:users,user_name',
             'passwd' => 'required|max:255|string',
         ];
     }

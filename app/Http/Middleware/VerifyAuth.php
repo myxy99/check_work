@@ -19,6 +19,6 @@ class VerifyAuth
             $next($request) :
             ($request->ajax() ?
                 response()->fail(100, '请先登陆!', null, 401) :
-                response()->view('errors.' . 403, null, 403));
+                response()->view('errors.' . 403, ['errors'=>''], 403));
     }
 }

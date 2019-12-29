@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-//        return parent::render($request, $exception);
+        return parent::render($request, $exception);
         $errormsg = '服务器错误！';
         if ($exception instanceof HttpException) {
             if ($exception->getStatusCode() == '404') {

@@ -18,8 +18,8 @@ class CreatePunchTimeRecordsTable extends Migration
             $table->string('name', 20)->comment('姓名');
             $table->bigInteger('user_id')->unsigned()->comment('用户id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamp('required_time')->nullable()->comment('应打卡时间');
-            $table->timestamp('actual_time')->comment('实际打卡时间');
+            $table->timestamp('required_time')->comment('应打卡时间');
+            $table->timestamp('actual_time')->nullable()->comment('实际打卡时间');
             $table->timestamps();
         });
     }
