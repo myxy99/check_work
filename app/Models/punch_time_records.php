@@ -170,7 +170,7 @@ class punch_time_records extends Model
     public static function getexport($startdate, $enddate)
     {
         try {
-            $statisticss = users::select('department_name')->distinct()->paginate(env('PAGE_NUM')); //有哪些项目
+            $statisticss = users::select('department_name')->distinct()->get(); //有哪些项目
             $departments = self::with('user')->where('required_time', '>', $startdate)->where('required_time', '<', $enddate)->get(); //所有得打卡数据
             $phones = login_records::with('user')->orderBy('updated_at', 'desc')->get(); //所有得电话号码
             foreach ($statisticss as $k => $statistics) {
