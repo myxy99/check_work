@@ -17,3 +17,9 @@ Route::get('/', function () {
     clean("<scpt>alert('1')</scpt>");
     return view('welcome');
 });
+
+Route::post('OAuth/login', 'OAuth\AuthController@login');
+Route::view('/index', 'index');
+Route::view('/admin', 'admin');
+
+

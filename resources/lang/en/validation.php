@@ -84,6 +84,7 @@ return [
     'check_code' => '请检查权限码',
     'check_state' => '请检查状态码',
     'check_access_code' => '请检查权限码',
+
     /*
 |--------------------------------------------------------------------------
 | Custom Validation Language Lines
@@ -112,6 +113,12 @@ return [
     'attributes' => [
         'user_name' => '用户名',
         'password' => '密码',
+        'attachments' =>'附件',
+        'H:i:s' => '时:分:秒',
+        'phone_number'=>'电话号码',
+        'name' =>'姓名',
+        'fromuser_id' => '发送人id',
+        'keywords' => '关键词',
         'title' => '标题',
         'content' => '通知内容',
         'title' => '标题',
@@ -124,7 +131,7 @@ return [
         'status' => '打卡设置的状态',
         'count' => '间隔打卡次数',
         'count_array' => '定时打卡数组',
-
+        'puchtime' => '应打卡时间',
     ],
 
 ];

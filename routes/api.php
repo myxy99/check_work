@@ -19,6 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::post('OAuth/login', 'OAuth\AuthController@login');//登陆
+Route::post('OAuth/logout', 'OAuth\AuthController@logout');//退出登陆
+Route::post('OAuth/refresh', 'OAuth\AuthController@refresh');//刷新token
+
+
 Route::prefix('Admin')->namespace('Admin')->group(function () {
     Route::get('/getUserName', 'PersonalCenterController@getUserName');
     Route::post('/updatePassword', 'PersonalCenterController@updatePassword');
@@ -52,3 +57,25 @@ Route::prefix('statistic')->namespace('Admin')->group(function () {
     Route::post('search', 'StatisticController@getSearch'); //搜索框查询
     Route::post('export', 'StatisticController@getexport'); //导出
 });
+
+//登录录入
+Route::post('front/loginrecord','Front\LoginRecordController@loginRecord');
+//获取前台通知信息
+Route::get('front/getallinfo','Front\FrontInfoController@getAllInfo');
+//前台个人信息获取
+Route::get('front/getpersoninfo','Front\PersonInfoController@getPersonInfo');
+//前台打卡
+Route::post('front/puchcard','Front\PunchCardController@puchCard');
+//获取所有信息
+Route::get('admin/getallmsg','Admin\MessageController@getAllMsg');
+//搜索信息
+Route::get('admin/searchmsg','Admin\MessageController@searchMsg');
+//删除信息
+Route::delete('admin/delmsg','Admin\MessageController@delMsg');
+//获取记录信息
+Route::get('admin/msgrecord','Admin\MessageController@msgRecord');
+//上传文件
+Route::post('admin/uploadfile','Admin\MessageController@uploadFile');
+//取消文件上传
+Route::delete('admin/cancelfile','Admin\MessageController@cancelFile');
+

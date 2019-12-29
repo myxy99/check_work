@@ -48,30 +48,30 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-//        return parent::render($request, $exception);
-        $errormsg = '服务器错误！';
-        if ($exception instanceof HttpException) {
-            if ($exception->getStatusCode() == '404') {
-                $StatusCode = $exception->getStatusCode();
-                $errors = $exception->getMessage();
-            } else {
-                $StatusCode = 500;
-                $errors = $exception->getMessage();
-                \App\Utils\Logs::logError($errormsg, [$errors]);
-            }
-        } else if ($exception instanceof AuthenticationException) {
-            $StatusCode = 403;
-            $errormsg = '权限不足！';
-            $errors = $exception->getMessage();
-        } else {
-            $errors = $exception->getMessage();
-            $StatusCode = 500;
-            \App\Utils\Logs::logError($errormsg, [$errors]);
-        }
-        if (Request::ajax()) {
-            return response()->fail($StatusCode, $errormsg, env('APP_DEBUG') ? $errors : null, $StatusCode);
-        }else{
-            return response()->view('errors.' . $StatusCode, ['errors' => $errors],$StatusCode);
-        }
+        return parent::render($request, $exception);
+//        $errormsg = '服务器错误！';
+//        if ($exception instanceof HttpException) {
+//            if ($exception->getStatusCode() == '404') {
+//                $StatusCode = $exception->getStatusCode();
+//                $errors = $exception->getMessage();
+//            } else {
+//                $StatusCode = 500;
+//                $errors = $exception->getMessage();
+//                \App\Utils\Logs::logError($errormsg, [$errors]);
+//            }
+//        } else if ($exception instanceof AuthenticationException) {
+//            $StatusCode = 403;
+//            $errormsg = '权限不足！';
+//            $errors = $exception->getMessage();
+//        } else {
+//            $errors = $exception->getMessage();
+//            $StatusCode = 500;
+//            \App\Utils\Logs::logError($errormsg, [$errors]);
+//        }
+//        if (Request::ajax()) {
+//            return response()->fail($StatusCode, $errormsg, env('APP_DEBUG') ? $errors : null, $StatusCode);
+//        }else{
+//            return response()->view('errors.' . $StatusCode, ['errors' => $errors],$StatusCode);
+//        }
     }
 }
