@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Utils\Logs;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 
@@ -16,13 +15,19 @@ class notices extends Model
     protected $guarded = [];
 
     //获取通知
+
+    /**
+     * @param $user_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function getNotices($user_id)
     {
         try {
             $result = self::join('notice_relations', 'notices.id', 'notice_relations.notice_id')
                 ->where('notice_relations.user_id', $user_id)
                 ->select('notices.id as id', 'notices.title as title', 'notices.content as content', 'notices.created_at')
-                ->paginate(10);
+                ->paginate(env('PAGE_NUM'));
             return $result;
         } catch (\Exception $e) {
             Logs::logError('获取通知失败！', [$e->getMessage()]);
@@ -31,12 +36,17 @@ class notices extends Model
     }
 
     //显示所有已发公告
+
+    /**
+     * @return |null
+     * @throws \Exception
+     */
     public static function getAllSendNotices()
     {
         try {
             $res = self::select('title', 'content', 'created_at')
                 ->orderby('updated_at', 'DESC')
-                ->paginate(5)
+                ->paginate(env('PAGE_NUM'))
                 ->toarray();
             return $res;
         } catch (\Exception $e) {
@@ -46,6 +56,12 @@ class notices extends Model
     }
 
     //搜索框搜索
+
+    /**
+     * @param $text
+     * @return |null
+     * @throws \Exception
+     */
     public static function searchNotice($text)
     {
         try {
@@ -53,7 +69,7 @@ class notices extends Model
                 ->where('content', 'like', '%' . $text . '%')
                 ->orwhere('title', 'like', '%' . $text . '%')
                 ->orderby('updated_at', 'DESC')
-                ->paginate(5)
+                ->paginate(env('PAGE_NUM'))
                 ->toarray();
             return $res;
         } catch (\Exception $e) {
@@ -63,6 +79,14 @@ class notices extends Model
     }
 
     //新增通知
+
+    /**
+     * @param $title
+     * @param $id
+     * @param $content
+     * @return int
+     * @throws \Exception
+     */
     public static function addNotice($title, $id, $content)
     {
         try {
@@ -97,12 +121,18 @@ class notices extends Model
             return 0;
         }
     }
+
+    /**
+     * @param array $array
+     * @return bool
+     * @throws \Exception
+     */
     public static function createNotices($array = [])
     {
         try {
             $Notices = self::create($array);
-            return $Notices ? $Notices->id : flase;
-        } catch (\Excption $e) {
+            return $Notices ? $Notices->id : false;
+        } catch (\Exception $e) {
             Logs::logError('通知内容表添加失败!', [$e->getMessage()]);
             return false;
         }

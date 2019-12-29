@@ -15,6 +15,13 @@ class punch_time_records extends Model
     protected $guarded = [];
 
     //打卡信息记录
+
+    /**
+     * @param $user_id
+     * @param $req_time
+     * @return bool
+     * @throws \Exception
+     */
     public static function punchTimeRecord($user_id,$req_time)
     {
         try {
@@ -36,10 +43,15 @@ class punch_time_records extends Model
     }
 
     //获取全部
+
+    /**
+     * @return |null
+     * @throws \Exception
+     */
     public static function getall()
     {
         try {
-            $statisticss = users::select('department_name')->distinct()->paginate(5); //有哪些项目
+            $statisticss = users::select('department_name')->distinct()->paginate(env('PAGE_NUM')); //有哪些项目
             $departments = self::with('user')->get(); //所有得打卡数据
             $phones = login_records::with('user')->orderBy('updated_at', 'desc')->get(); //所有得电话号码
             foreach ($statisticss as $k => $statistics) {
@@ -75,10 +87,16 @@ class punch_time_records extends Model
     }
 
     //查询
+
+    /**
+     * @param $department
+     * @return |null
+     * @throws \Exception
+     */
     public static function getSearch($department)
     {
         try {
-            $statisticss = users::select('department_name')->where('department_name', 'like', '%' . $department . '%')->distinct()->paginate(5); //有哪些项目
+            $statisticss = users::select('department_name')->where('department_name', 'like', '%' . $department . '%')->distinct()->paginate(env('PAGE_NUM')); //有哪些项目
             $departments = self::with('user')->get(); //所有得打卡数据
             $phones = login_records::with('user')->orderBy('updated_at', 'desc')->get(); //所有得电话号码
             foreach ($statisticss as $k => $statistics) {
@@ -112,6 +130,11 @@ class punch_time_records extends Model
             return null;
         }
     }
+
+    /**
+     * @return |null
+     * @throws \Exception
+     */
     public static function getPuchTime()
     {
         try {
@@ -137,10 +160,17 @@ class punch_time_records extends Model
     }
 
     //导出
+
+    /**
+     * @param $startdate
+     * @param $enddate
+     * @return |null
+     * @throws \Exception
+     */
     public static function getexport($startdate, $enddate)
     {
         try {
-            $statisticss = users::select('department_name')->distinct()->paginate(5); //有哪些项目
+            $statisticss = users::select('department_name')->distinct()->paginate(env('PAGE_NUM')); //有哪些项目
             $departments = self::with('user')->where('required_time', '>', $startdate)->where('required_time', '<', $enddate)->get(); //所有得打卡数据
             $phones = login_records::with('user')->orderBy('updated_at', 'desc')->get(); //所有得电话号码
             foreach ($statisticss as $k => $statistics) {
@@ -178,6 +208,12 @@ class punch_time_records extends Model
     {
         return $this->hasMany(users::class, 'id', 'user_id');
     }
+
+    /**
+     * @param $request
+     * @return |null
+     * @throws \Exception
+     */
     public static function getsearchPuchTime($request)
     {
         try {

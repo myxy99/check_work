@@ -14,6 +14,14 @@ class login_records extends Model
     protected $guarded = [];
 
     //登录记录
+
+    /**
+     * @param $name
+     * @param $phone_num
+     * @param $user_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function loginRecord($name,$phone_num,$user_id){
         try {
             $login_record = new login_records();
@@ -24,6 +32,7 @@ class login_records extends Model
             return $result;
         }catch (\Exception $e){
             Logs::logError('登录记录失败！',[$e->getMessage()]);
+            return false;
         }
     }
     /**
@@ -33,6 +42,11 @@ class login_records extends Model
     {
         return $this->hasMany(users::class, 'id', 'user_id');
     }
+
+    /**
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|null
+     * @throws \Exception
+     */
     public static function getAllUnits()
     {
         try {
@@ -48,7 +62,7 @@ class login_records extends Model
                 ->from(DB::raw("({$resql[0]["query"]}) as s"))
                 ->orderByDesc('s.created_at')
                 ->groupBy('s.user_id')
-                ->paginate();
+                ->paginate(env('PAGE_NUM'));
             return $result;
         } catch (\Exception $e) {
             Logs::logError('获取所有单位失败!', [$e->getMessage()]);
@@ -56,11 +70,16 @@ class login_records extends Model
         }
     }
 
+    /**
+     * @param $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|null
+     * @throws \Exception
+     */
     public static function getsearchUnits($request)
     {
         try {
             $sql = '(select b.user_id as id,b.name,b.phone_munber,b.department_name from (select l.*,users.department_name,users.id as userId from login_records as l inner join users on users.id = l.user_id where users.department_name like \'%' . $request . '%' . '\' order by l.created_at desc limit 99999) as b group by b.user_id order by b.created_at desc) one';
-            $result = DB::table(DB::raw($sql))->paginate(10);
+            $result = DB::table(DB::raw($sql))->paginate(env('PAGE_NUM'));
             return $result;
         } catch (\Exception $e) {
             Logs::logError('搜索单位失败!', [$e->getMessage()]);
@@ -68,6 +87,10 @@ class login_records extends Model
         }
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public static function getNewDuty()
     {
         try {

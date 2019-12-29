@@ -14,6 +14,13 @@ class attachments extends Model
 
 
     //上传文件存入数据库
+
+    /**
+     * @param $user_id
+     * @param $file_path
+     * @return bool
+     * @throws \Exception
+     */
     public static function uploadsFile($user_id,$file_path){
         try {
             $result = users::getLoginNameInfo($user_id);
@@ -29,6 +36,12 @@ class attachments extends Model
         }
     }
     //删除附件数据库记录
+
+    /**
+     * @param $file_id
+     * @return bool|int
+     * @throws \Exception
+     */
     public static function delectFileMsg($file_id){
         try {
             $result = self::destroy($file_id);

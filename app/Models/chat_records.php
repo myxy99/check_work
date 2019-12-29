@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Utils\Logs;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class chat_records extends Model
 {
@@ -14,6 +13,12 @@ class chat_records extends Model
     protected $guarded = [];
 
     //获取所有消息
+
+    /**
+     * @param $user_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function getAllChatMsg($user_id){
         try {
             $result = self::join('users', 'chat_records.from_user_id', 'users.id')
@@ -26,7 +31,7 @@ class chat_records extends Model
                     'attachment_id as readstatus',
                     'users.department_name',
                     'chat_records.created_at as replaytime')
-                ->paginate();
+                ->paginate(env('PAGE_NUM'));
             return $result;
         }catch (\Exception $e){
             Logs::logError('获取失败！',[$e->getMessage()]);
@@ -35,6 +40,13 @@ class chat_records extends Model
     }
 
     //获取聊天记录
+
+    /**
+     * @param $fromUser_id
+     * @param $touser_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function getMsgRecord($fromUser_id,$touser_id){
         try {
             $result = self::leftjoin('attachments', 'chat_records.attachment_id', 'attachments.id')
@@ -49,7 +61,7 @@ class chat_records extends Model
                     'chat_records.content',
                     'attachments.file_path as atch_addr',
                     'chat_records.created_at as replaytime')
-                ->paginate(10);
+                ->paginate(env('PAGE_NUM'));
             return $result;
         }catch (\Exception $e){
             Logs::logError("获取记录失败！",[$e->getMessage()]);
@@ -59,6 +71,13 @@ class chat_records extends Model
     }
 
     //删除消息
+
+    /**
+     * @param $fromUser_id
+     * @param $touser_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function deleteChatMsg($fromUser_id,$touser_id){
         try {
             $result = self::leftjoin('attachments', 'chat_records.attachment_id', 'attachments.id')
@@ -76,6 +95,13 @@ class chat_records extends Model
     }
 
     //搜索消息
+
+    /**
+     * @param $keywords
+     * @param $user_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function searchMsg($keywords,$user_id){
         try {
             $result = self::join('users', 'chat_records.from_user_id', 'users.id')
@@ -90,7 +116,7 @@ class chat_records extends Model
                     'attachment_id as readstatus',
                     'users.department_name',
                     'chat_records.created_at as replaytime')
-                ->paginate(10);
+                ->paginate(env('PAGE_NUM'));
             return $result;
         }catch (\Exception $e){
             Logs::logError('搜索失败！',[$e->getMessage()]);

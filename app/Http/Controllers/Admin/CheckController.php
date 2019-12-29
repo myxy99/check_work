@@ -14,6 +14,11 @@ use Illuminate\Pagination\Paginator;
 
 class CheckController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function getAllCheck(Request $request)
     {
         $puchtimerecords = punch_time_records::getPuchTime();
@@ -26,10 +31,15 @@ class CheckController extends Controller
                 $val['phone'] = $duty->phone_munber;
             }
         }
-        $paginator = self::getPaginator($request, $puchtimerecords->toArray(), 10);
+        $paginator = self::getPaginator($request, $puchtimerecords->toArray(), env('PAGE_NUM'));
         return response()->success(200, '成功获取全部打卡信息', $paginator);
     }
 
+    /**
+     * @param setCheckRequest $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function setCheck(setCheckRequest $request)
     {
         $b_time = $request['begin_time'];
@@ -47,6 +57,10 @@ class CheckController extends Controller
         return response()->success(200, '打卡设置成功', null);
     }
 
+    /**
+     * @param searchCheckRequest $request
+     * @return mixed
+     */
     public function searchCheck(searchCheckRequest $request)
     {
         $puchtimerecords = punch_time_records::getsearchPuchTime($request);
@@ -59,10 +73,16 @@ class CheckController extends Controller
                 $val['phone'] = $duty->phone_munber;
             }
         }
-        $paginator = self::getPaginator($request, $puchtimerecords->toArray(), 10);
+        $paginator = self::getPaginator($request, $puchtimerecords->toArray(), env('PAGE_NUM'));
         return response()->success(200, '成功获取全部打卡信息', $paginator);
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @param $count
+     * @return mixed
+     */
     private function getCountArray($start, $end, $count)
     {
         $start = array_map('intval', explode(':', $start));
@@ -79,6 +99,11 @@ class CheckController extends Controller
         return $count_array;
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @return float|int
+     */
     private function getAllTime($start, $end)
     {
         $time = 0;
@@ -94,11 +119,21 @@ class CheckController extends Controller
         return $time;
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     private function getTimePattern($time)
     {
         return $time >= 10 ? $time : ('0' . $time);
     }
 
+    /**
+     * @param $request
+     * @param $data
+     * @param $perPage
+     * @return LengthAwarePaginator
+     */
     private function getPaginator($request, $data, $perPage)
     {
         if ($request->has('page')) {

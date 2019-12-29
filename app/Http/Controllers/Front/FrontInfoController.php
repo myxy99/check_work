@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\notices;
 use App\Utils\Logs;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FrontInfoController extends Controller
 {
     //获取前台通知信息
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function getAllInfo(){
         try{
             $user_id = Auth::id();

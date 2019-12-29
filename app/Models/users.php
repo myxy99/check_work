@@ -33,6 +33,12 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
     }
 
     //获取登录信息
+
+    /**
+     * @param $user_id
+     * @return bool
+     * @throws \Exception
+     */
     public static function getLoginNameInfo($user_id){
         try {
             $result = self::join('login_records', 'users.id', 'login_records.user_id')
@@ -89,12 +95,17 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
     }
 
 
+    /**
+     * @param array $array
+     * @return bool
+     * @throws \Exception
+     */
     public static function createUnit($array = [])
     {
         try {
             $id = self::create($array);
             return $id ? true : false;
-        } catch (\Excption $e) {
+        } catch (\Exception $e) {
             Logs::logError('添加单位失败!', [$e->getMessage()]);
             return false;
         }
@@ -136,6 +147,12 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
         }
     }
 
+    /**
+     * @param array $array
+     * @param $id
+     * @return bool
+     * @throws \Exception
+     */
     public static function updateUnit($array = [], $id)
     {
         try {
@@ -144,7 +161,7 @@ class users extends \Illuminate\Foundation\Auth\User implements JWTSubject, Auth
             if (isset($array['passwd'])) $users->passwd = $array['passwd'];
             $result = $users->save();
             return $result ? true : false;
-        } catch (\Excption $e) {
+        } catch (\Exception $e) {
             Logs::logError('更新单位失败!', [$e->getMessage()]);
             return false;
         }

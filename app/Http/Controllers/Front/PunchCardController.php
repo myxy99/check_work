@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class PunchCardController extends Controller
 {
     //打卡
+    /**
+     * @param PuchCardRequest $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function puchCard(PuchCardRequest $request){
         try {
             $time = $request->puchtime;

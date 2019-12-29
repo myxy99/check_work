@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\LoginRecordRequest;
 use App\Models\login_records;
 use App\Utils\Logs;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginRecordController extends Controller
 {
+    /**
+     * @param LoginRecordRequest $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function loginRecord(LoginRecordRequest $request)
     {
         try {

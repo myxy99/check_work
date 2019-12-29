@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 class PersonInfoController extends Controller
 {
     //个人信息获取
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function getPersonInfo(){
         try {
             $user_id = Auth::id();
